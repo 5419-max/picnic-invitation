@@ -3,18 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>A Special Invitation for You 🧺✨</title>
-  
-  <!-- Tailwind CSS CDN -->
+
+  <title>for you · our story</title>
+
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- Canvas Confetti CDN -->
+
+  <!-- Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  
-  <!-- Google Fonts: Fredoka & Quicksand -->
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Quicksand:wght@400;500;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 
   <script>
     tailwind.config = {
@@ -23,35 +24,64 @@
           fontFamily: {
             fredoka: ['Fredoka', 'sans-serif'],
             quicksand: ['Quicksand', 'sans-serif'],
+            playfair: ['Playfair Display', 'serif']
           },
+
           colors: {
             lilac: {
-              100: '#f5f3ff',
-              200: '#ede9fe',
-              300: '#ddd6fe',
+              50: '#faf5ff',
+              100: '#f3e8ff',
+              200: '#e9d5ff',
+              300: '#d8b4fe',
               400: '#c084fc',
               500: '#a855f7',
               600: '#9333ea',
               700: '#7e22ce',
+              800: '#6b21a8'
             }
           },
+
           animation: {
-            'float': 'float 3s ease-in-out infinite',
-            'pulse-soft': 'pulseSoft 2s ease-in-out infinite',
-            'bounce-gentle': 'bounceGentle 1.5s ease-in-out infinite',
+            float: 'float 4s ease-in-out infinite',
+            pulseSoft: 'pulseSoft 3s ease-in-out infinite',
+            fadeUp: 'fadeUp 0.8s ease-out',
+            shimmer: 'shimmer 2s infinite',
+            heartbeat: 'heartbeat 1.5s ease-in-out infinite'
           },
+
           keyframes: {
             float: {
-              '0%, 100%': { transform: 'translateY(0px)' },
-              '50%': { transform: 'translateY(-10px)' },
+              '0%,100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-12px)' }
             },
+
             pulseSoft: {
-              '0%, 100%': { opacity: '1', transform: 'scale(1)' },
-              '50%': { opacity: '0.85', transform: 'scale(1.02)' },
+              '0%,100%': { opacity: '1' },
+              '50%': { opacity: '0.85' }
             },
-            bounceGentle: {
-              '0%, 100%': { transform: 'translateY(0)' },
-              '50%': { transform: 'translateY(-5px)' },
+
+            fadeUp: {
+              '0%': {
+                opacity: '0',
+                transform: 'translateY(20px)'
+              },
+              '100%': {
+                opacity: '1',
+                transform: 'translateY(0)'
+              }
+            },
+
+            shimmer: {
+              '0%': { backgroundPosition: '-200% center' },
+              '100%': { backgroundPosition: '200% center' }
+            },
+
+            heartbeat: {
+              '0%,100%': { transform: 'scale(1)' },
+              '14%': { transform: 'scale(1.1)' },
+              '28%': { transform: 'scale(1)' },
+              '42%': { transform: 'scale(1.05)' },
+              '70%': { transform: 'scale(1)' }
             }
           }
         }
@@ -63,454 +93,964 @@
     body {
       font-family: 'Quicksand', sans-serif;
       touch-action: manipulation;
-    }
-    
-    /* Background decorative sparkles */
-    .bg-sparkles {
-      background-image: radial-gradient(rgba(192, 132, 252, 0.25) 1.5px, transparent 1.5px);
-      background-size: 24px 24px;
+      background:
+        radial-gradient(
+          circle at 30% 20%,
+          #f3e8ff,
+          #d8b4fe 70%,
+          #c084fc
+        );
+      min-height: 100vh;
     }
 
-    /* Scratch Canvas overlay helper */
-    #scratch-canvas {
+    .bg-sparkle {
+      background-image:
+        radial-gradient(
+          rgba(255,255,255,0.25) 1.5px,
+          transparent 1.5px
+        );
+      background-size: 28px 28px;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 20px 60px rgba(126, 34, 206, 0.15);
+      transition: all 0.5s ease;
+    }
+
+    .btn-gradient {
+      background: linear-gradient(
+        135deg,
+        #a855f7,
+        #7e22ce
+      );
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-gradient::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        transparent,
+        rgba(255,255,255,0.1),
+        transparent
+      );
+      transform: rotate(45deg);
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) rotate(45deg); }
+    }
+
+    .chapter-btn:active {
+      transform: scale(0.96);
+    }
+
+    .memory-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(4px);
+      border-left: 4px solid #c084fc;
+      transition: all 0.3s ease;
+    }
+
+    .memory-card:hover {
+      transform: translateX(4px);
+      border-left-color: #7e22ce;
+    }
+
+    .envelope {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .envelope:hover {
+      transform: scale(1.05) rotate(-1deg);
+      box-shadow: 0 8px 25px rgba(126, 34, 206, 0.15);
+    }
+
+    .runaway {
+      transition:
+        transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: absolute;
       touch-action: none;
+    }
+
+    .heart-float {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .glow-text {
+      text-shadow: 0 0 30px rgba(168, 85, 247, 0.2);
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(168, 85, 247, 0.1);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #c084fc;
+      border-radius: 10px;
+    }
+
+    /* Progress indicator dots */
+    .dot {
+      transition: all 0.3s ease;
+    }
+
+    .dot.active {
+      background: #7e22ce;
+      transform: scale(1.3);
+    }
+
+    /* Section transitions */
+    section {
+      transition: all 0.5s ease;
     }
   </style>
 </head>
-<body class="bg-gradient-to-br from-purple-100 via-lilac-200 to-purple-300 min-h-screen flex flex-col justify-between items-center p-4 bg-sparkles relative overflow-x-hidden select-none">
 
-  <!-- Background Music Element -->
+<body class="flex flex-col items-center p-4 bg-sparkle min-h-screen">
+
+  <!-- ========================= -->
+  <!-- MUSIC -->
+  <!-- ========================= -->
+
   <audio id="bg-music" loop preload="auto">
-    <!-- Replace 'background-music.mp3' with your audio file path or URL -->
     <source src="CHIRAI-Blueberry-Skies.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Audio Controls Header -->
-  <header class="w-full max-w-md flex justify-between items-center py-2 z-20">
-    <div class="flex items-center space-x-2 bg-white/70 backdrop-blur-md px-3 py-1.5 rounded-full border border-purple-200 shadow-sm">
-      <span class="text-xs font-bold text-lilac-700 tracking-wide uppercase font-fredoka">For My Favorite Person 💕</span>
+  <!-- Music control -->
+  <div class="w-full max-w-md flex justify-between items-center py-2 z-30">
+
+    <div class="flex items-center space-x-2 bg-white/70 backdrop-blur-md px-4 py-1.5 rounded-full border border-purple-200/60 shadow-sm">
+      <span class="text-[11px] font-bold text-purple-800 font-fredoka tracking-wide animate-pulse">
+        💕 for my favorite person
+      </span>
     </div>
 
-    <button id="music-btn" onclick="toggleAudio()" class="flex items-center space-x-2 bg-white/80 hover:bg-white text-lilac-700 px-3.5 py-1.5 rounded-full border border-purple-200 shadow-md transition-all active:scale-95">
-      <span id="music-icon" class="text-sm">🎵</span>
-      <span id="music-text" class="text-xs font-bold font-fredoka">Play Song</span>
+    <button
+      id="music-toggle"
+      onclick="toggleMusic()"
+      class="flex items-center space-x-1.5 bg-white/80 hover:bg-white text-purple-700 px-4 py-1.5 rounded-full border border-purple-200 shadow-md transition active:scale-95"
+    >
+      <span id="music-icon">🎵</span>
+      <span id="music-label" class="text-[11px] font-bold font-fredoka">
+        play
+      </span>
     </button>
-  </header>
 
-  <!-- Main Card Container -->
-  <main class="w-full max-w-md my-auto relative z-10">
-    
-    <!-- Step Progress Bar -->
-    <div id="progress-container" class="mb-4 bg-white/50 backdrop-blur-sm rounded-full p-1.5 border border-purple-200 shadow-sm">
-      <div class="flex items-center justify-between text-xs font-bold text-lilac-700 px-3 mb-1 font-fredoka">
-        <span id="progress-text">Level 1 of 3</span>
-        <span id="progress-percent">33%</span>
-      </div>
-      <div class="w-full bg-purple-100 h-2.5 rounded-full overflow-hidden">
-        <div id="progress-bar" class="bg-gradient-to-r from-lilac-400 to-lilac-600 h-full rounded-full transition-all duration-500" style="width: 33%;"></div>
-      </div>
-    </div>
+  </div>
 
-    <!-- CARD CONTENT -->
-    <div class="bg-white/90 backdrop-blur-md rounded-3xl p-6 shadow-xl border border-purple-100 text-center relative overflow-hidden transition-all duration-300">
-      
-      <!-- PUZZLE 1: TAP / SCRATCH REVEAL -->
-      <section id="puzzle-1" class="space-y-4">
-        <div class="inline-block bg-lilac-100 text-lilac-700 px-3 py-1 rounded-full text-xs font-bold font-fredoka">
-          ✨ Step 1: Reveal the Memory
-        </div>
-        <h2 class="text-2xl font-bold font-fredoka text-purple-900">Scratch to reveal secret #1! 💖</h2>
-        <p class="text-xs text-purple-600 font-medium">Use your finger or cursor to scratch away the purple layer below!</p>
+  <!-- ========================= -->
+  <!-- CHAPTER PROGRESS DOTS -->
+  <!-- ========================= -->
 
-        <!-- Polaroid Frame Container -->
-        <div class="relative w-64 h-72 mx-auto bg-white p-3 pt-4 rounded-xl shadow-lg border border-purple-100 transform -rotate-1 hover:rotate-0 transition-transform duration-300">
-          <!-- Underlying Polaroid Content -->
-          <div class="w-full h-48 bg-purple-50 rounded overflow-hidden relative">
-            <img id="polaroid-img" src="little-thing-2.jpg" alt="Us" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80'">
-          </div>
-          <p class="mt-3 font-fredoka text-purple-800 text-sm tracking-wide">Ready for an adventure? ✨</p>
+  <div id="progress-dots" class="w-full max-w-md flex justify-center gap-2 mb-3 z-20">
+    <div class="dot w-2 h-2 rounded-full bg-purple-300 active" data-chapter="0"></div>
+    <div class="dot w-2 h-2 rounded-full bg-purple-300" data-chapter="1"></div>
+    <div class="dot w-2 h-2 rounded-full bg-purple-300" data-chapter="2"></div>
+    <div class="dot w-2 h-2 rounded-full bg-purple-300" data-chapter="3"></div>
+    <div class="dot w-2 h-2 rounded-full bg-purple-300" data-chapter="4"></div>
+    <div class="dot w-2 h-2 rounded-full bg-purple-300" data-chapter="5"></div>
+    <div class="dot w-2 h-2 rounded-full bg-purple-300" data-chapter="6"></div>
+  </div>
 
-          <!-- Scratch Canvas Overlay -->
-          <canvas id="scratch-canvas" class="absolute inset-0 w-full h-full rounded-xl z-10 cursor-pointer"></canvas>
-        </div>
+  <!-- ========================= -->
+  <!-- MAIN -->
+  <!-- ========================= -->
 
-        <button id="p1-next-btn" onclick="goToStep(2)" disabled class="w-full py-3 bg-gray-300 text-gray-500 font-bold font-fredoka rounded-2xl shadow-md transition-all cursor-not-allowed">
-          Scratch to Unlock Step 2 ➔
-        </button>
-      </section>
+  <main class="w-full max-w-md mx-auto my-1 relative z-10">
 
+    <div class="glass-card rounded-3xl p-6 shadow-2xl relative overflow-hidden">
 
-      <!-- PUZZLE 2: TRIVIA QUESTION -->
-      <section id="puzzle-2" class="hidden space-y-4">
-        <div class="inline-block bg-lilac-100 text-lilac-700 px-3 py-1 rounded-full text-xs font-bold font-fredoka">
-          🍓 Step 2: Pop Quiz
-        </div>
-        <h2 class="text-2xl font-bold font-fredoka text-purple-900">What is the absolute #1 requirement for a perfect date?</h2>
-        <p class="text-xs text-purple-600 font-medium">Choose wisely...</p>
+      <!-- Decorative floating hearts -->
+      <div class="absolute -top-10 -right-10 text-6xl opacity-10 heart-float">💜</div>
+      <div class="absolute -bottom-10 -left-10 text-6xl opacity-10 heart-float" style="animation-delay: 1.5s;">💜</div>
 
-        <div class="space-y-2.5 pt-2">
-          <button onclick="checkTrivia(this, false)" class="trivia-option w-full py-3 px-4 text-left text-sm font-semibold text-purple-900 bg-purple-50 hover:bg-lilac-100 border border-purple-200 rounded-2xl transition-all">
-            A) Extra crispy snacks & cold drinks 🧃
-          </button>
-          <button onclick="checkTrivia(this, false)" class="trivia-option w-full py-3 px-4 text-left text-sm font-semibold text-purple-900 bg-purple-50 hover:bg-lilac-100 border border-purple-200 rounded-2xl transition-all">
-            B) Matching permanent accessories ✨
-          </button>
-          <button onclick="checkTrivia(this, true)" class="trivia-option w-full py-3 px-4 text-left text-sm font-semibold text-purple-900 bg-purple-50 hover:bg-lilac-100 border border-purple-200 rounded-2xl transition-all">
-            C) All of the above + YOU! 🥰
-          </button>
-          <button onclick="checkTrivia(this, false)" class="trivia-option w-full py-3 px-4 text-left text-sm font-semibold text-purple-900 bg-purple-50 hover:bg-lilac-100 border border-purple-200 rounded-2xl transition-all">
-            D) Chips & egg with a sunset drive 🌅
-          </button>
-        </div>
+      <!-- ========================= -->
+      <!-- CHAPTER 0 -->
+      <!-- ========================= -->
 
-        <div id="trivia-feedback" class="h-6 text-xs font-bold text-lilac-600 font-fredoka"></div>
+      <section id="chapter-0" class="space-y-5 text-center animate-fadeUp">
 
-        <button id="p2-next-btn" onclick="goToStep(3)" disabled class="w-full py-3 bg-gray-300 text-gray-500 font-bold font-fredoka rounded-2xl shadow-md transition-all cursor-not-allowed">
-          Unlock Final Question ➔
-        </button>
-      </section>
+        <div class="text-5xl animate-float">🌙</div>
 
+        <h1 class="font-playfair text-3xl text-purple-900 leading-tight glow-text">
+          “I could've just asked you normally…”
+        </h1>
 
-      <!-- PUZZLE 3: THE RUNAWAY QUESTION -->
-      <section id="puzzle-3" class="hidden space-y-4">
-        <div class="inline-block bg-lilac-100 text-lilac-700 px-3 py-1 rounded-full text-xs font-bold font-fredoka">
-          💌 Step 3: The Big Question
-        </div>
-        <h2 class="text-2xl font-bold font-fredoka text-purple-900">Will you go on this special date with me tomorrow? 🧺✨</h2>
-        <p class="text-xs text-purple-600 font-medium">I have the whole day planned!</p>
-
-        <div id="runaway-container" class="relative min-h-[140px] flex items-center justify-center space-x-4 pt-4">
-          <!-- YES Button -->
-          <button onclick="triggerBigReveal()" class="px-8 py-4 bg-gradient-to-r from-lilac-500 to-lilac-700 hover:from-lilac-600 hover:to-lilac-800 text-white font-bold font-fredoka text-lg rounded-2xl shadow-lg transform hover:scale-105 active:scale-95 transition-all z-20">
-            YES! 🥰
-          </button>
-
-          <!-- RUNAWAY NO Button -->
-          <button id="no-btn" class="px-6 py-3 bg-gray-100 text-purple-600 font-bold font-fredoka text-sm rounded-2xl border border-purple-200 shadow-sm transition-all duration-200 z-10 absolute">
-            No 💀
-          </button>
-        </div>
-      </section>
-
-
-      <!-- REVEAL SCREEN (FINAL INVITATION DETAILS & ITINERARY) -->
-      <section id="reveal-screen" class="hidden space-y-4 animate-pulse-soft">
-        <div class="inline-block bg-emerald-100 text-emerald-700 px-4 py-1.5 rounded-full text-xs font-bold font-fredoka animate-bounce-gentle">
-          🎉 IT'S A DATE! 🎉
-        </div>
-        
-        <h2 class="text-3xl font-extrabold font-fredoka text-purple-900">Our Perfect Day Awaits! 🧺✨</h2>
-
-        <!-- Featured Polaroid Photo -->
-        <div class="w-56 h-56 mx-auto bg-white p-3 pt-3 rounded-xl shadow-md border border-purple-100 transform rotate-1">
-          <div class="w-full h-40 bg-purple-50 rounded overflow-hidden">
-            <img src="Date-3.jpg" alt="Us" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80'">
-          </div>
-          <p class="mt-2 font-fredoka text-purple-800 text-xs">You & Me ❤️</p>
-        </div>
-
-        <!-- Details & Detailed Itinerary Card -->
-        <div class="bg-gradient-to-br from-purple-50 to-lilac-100/80 p-4 rounded-2xl border border-purple-200 text-left space-y-3 shadow-inner">
-          
-          <div class="flex items-center space-x-3">
-            <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-lg shadow-sm">🗓️</div>
-            <div>
-              <p class="text-[10px] text-purple-500 font-bold uppercase tracking-wider">Date & Pick-Up</p>
-              <p class="text-sm font-bold text-purple-900 font-fredoka">Tomorrow at 3:30 PM</p>
-            </div>
-          </div>
-
-          <hr class="border-purple-200/60 my-1">
-
-          <p class="text-[10px] text-purple-500 font-bold uppercase tracking-wider px-1">Our Date Itinerary ✨</p>
-
-          <!-- Stop 1: Picnic -->
-          <div class="flex items-center space-x-3">
-            <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-lg shadow-sm">🧺</div>
-            <div>
-              <p class="text-xs font-bold text-purple-900 font-fredoka">1. Cozy Picnic Date</p>
-              <p class="text-[11px] text-purple-600 font-medium">Snacks, games & sweet chats at the park 🌸</p>
-            </div>
-          </div>
-
-          <!-- Stop 2: Permanent Bracelets -->
-          <div class="flex items-center space-x-3">
-            <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-lg shadow-sm">🔗</div>
-            <div>
-              <p class="text-xs font-bold text-purple-900 font-fredoka">2. Permanent Bracelets</p>
-              <p class="text-[11px] text-purple-600 font-medium">Getting our matching welded bracelets ✨</p>
-            </div>
-          </div>
-
-          <!-- Stop 3: Sunset Drive -->
-          <div class="flex items-center space-x-3">
-            <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-lg shadow-sm">🌅</div>
-            <div>
-              <p class="text-xs font-bold text-purple-900 font-fredoka">3. Golden Hour Sunset Drive</p>
-              <p class="text-[11px] text-purple-600 font-medium">Scenic cruise as an official full couple ❤️🚗</p>
-            </div>
-          </div>
-
-          <hr class="border-purple-200/60 my-1">
-
-          <!-- Dress Code -->
-          <div class="flex items-center space-x-3">
-            <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-lg shadow-sm">👗</div>
-            <div>
-              <p class="text-[10px] text-purple-500 font-bold uppercase tracking-wider">Dress Code</p>
-              <p class="text-xs font-bold text-purple-900 font-fredoka">Cute, comfortable & golden hour ready!</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Sweet Personal Note -->
-        <p class="text-xs text-purple-700 italic bg-white/60 p-3 rounded-xl border border-purple-100">
-          "I've got all your favorite snacks ready, matching permanent bracelets lined up, and a golden hour sunset drive planned just for us. See you tomorrow 💕"
+        <p class="text-lg font-fredoka text-purple-700">
+          …but you know me.
         </p>
 
-        <p class="text-[11px] text-purple-500 font-medium">Take a screenshot of this so you don't forget! 📸</p>
+        <div class="w-16 h-1 bg-gradient-to-r from-lilac-400 to-lilac-600 mx-auto rounded-full"></div>
+
+        <p class="text-2xl font-fredoka text-purple-800">
+          so I made you something.
+        </p>
+
+        <p class="text-sm text-purple-600 leading-relaxed">
+          Because apparently asking one simple question
+          wasn't dramatic enough for me.
+        </p>
+
+        <button
+          onclick="goToChapter(1)"
+          class="mt-4 px-8 py-3 btn-gradient text-white font-bold font-fredoka rounded-2xl shadow-lg transform hover:scale-105 transition active:scale-95"
+        >
+          enter 🕊️
+        </button>
+
+      </section>
+
+      <!-- ========================= -->
+      <!-- CHAPTER 1 -->
+      <!-- ========================= -->
+
+      <section id="chapter-1" class="hidden space-y-4">
+
+        <div class="flex items-center space-x-2 text-purple-600">
+          <span class="text-sm font-bold font-fredoka">
+            📖 chapter 01
+          </span>
+
+          <span class="text-[10px] text-purple-400">
+            — before you
+          </span>
+        </div>
+
+        <h2 class="font-playfair text-2xl text-purple-900">
+          little things I remember
+        </h2>
+
+        <!-- THE ONE ORIGINAL PHOTO -->
+        <div class="bg-white p-3 rounded-2xl shadow-md border border-purple-100 transform hover:scale-[1.02] transition duration-300">
+          <img
+            src="little-thing-2.jpg"
+            alt="you"
+            class="w-full rounded-xl object-cover"
+            onerror="this.src='https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80'"
+          >
+          <p class="text-xs text-purple-500 text-center mt-3 font-fredoka">
+            one of the little things I keep coming back to ❤️
+          </p>
+        </div>
+
+        <div class="space-y-3">
+
+          <div class="memory-card p-3 rounded-xl border border-purple-100/60">
+            <p class="text-xs text-purple-400 font-bold">
+              ✨ somewhere along the way
+            </p>
+            <p class="text-sm text-purple-800 font-medium">
+              you stopped being somebody I simply enjoyed talking to
+              and became somebody I genuinely cared about.
+            </p>
+          </div>
+
+          <div class="memory-card p-3 rounded-xl border border-purple-100/60">
+            <p class="text-xs text-purple-400 font-bold">
+              💭 the funny part
+            </p>
+            <p class="text-sm text-purple-800 font-medium">
+              somehow we became friends who happened to fall in love
+              with each other.
+            </p>
+          </div>
+
+          <div class="memory-card p-3 rounded-xl border border-purple-100/60">
+            <p class="text-xs text-purple-400 font-bold">
+              🫶 and then there was you
+            </p>
+            <p class="text-sm text-purple-800 font-medium">
+              making ordinary conversations feel like places
+              I actually wanted to stay.
+            </p>
+          </div>
+
+        </div>
+
+        <button
+          onclick="goToChapter(2)"
+          class="w-full py-3 btn-gradient text-white font-bold font-fredoka rounded-2xl shadow-lg transform hover:scale-[1.02] transition active:scale-95"
+        >
+          next chapter ➔
+        </button>
+
+      </section>
+
+      <!-- ========================= -->
+      <!-- CHAPTER 2 -->
+      <!-- ========================= -->
+
+      <section id="chapter-2" class="hidden space-y-4">
+
+        <div class="flex items-center space-x-2 text-purple-600">
+          <span class="text-sm font-bold font-fredoka">
+            💫 chapter 02
+          </span>
+          <span class="text-[10px] text-purple-400">
+            — the little things
+          </span>
+        </div>
+
+        <h2 class="font-playfair text-2xl text-purple-900">
+          things you probably don't realize you do
+        </h2>
+
+        <div class="space-y-3 max-h-80 overflow-y-auto pr-1">
+
+          <div class="bg-purple-50/70 p-4 rounded-xl border border-purple-100 hover:bg-purple-50 transition">
+            <p class="text-sm text-purple-800 leading-relaxed">
+              You call me when you're overwhelmed,
+              and somehow my voice makes the world feel
+              a little quieter.
+            </p>
+          </div>
+
+          <div class="bg-purple-50/70 p-4 rounded-xl border border-purple-100 hover:bg-purple-50 transition">
+            <p class="text-sm text-purple-800 leading-relaxed">
+              You don't always know how to talk about
+              what you're feeling. Sometimes you just
+              curl up and let it pass.
+            </p>
+          </div>
+
+          <div class="bg-purple-50/70 p-4 rounded-xl border border-purple-100 hover:bg-purple-50 transition">
+            <p class="text-sm text-purple-800 leading-relaxed">
+              And when I notice, you don't always need
+              me to fix anything. Sometimes you just need
+              me to stay close enough to know you're not alone.
+            </p>
+          </div>
+
+          <div class="bg-purple-50/70 p-4 rounded-xl border border-purple-100 hover:bg-purple-50 transition">
+            <p class="text-sm text-purple-800 leading-relaxed">
+              You have this ridiculous ability to make me
+              want to take care of you without even asking.
+            </p>
+          </div>
+
+          <div class="bg-purple-50/70 p-4 rounded-xl border border-purple-100 hover:bg-purple-50 transition">
+            <p class="text-sm text-purple-800 leading-relaxed">
+              And somehow, even when things get complicated,
+              you still make me think about the future
+              instead of running from it.
+            </p>
+          </div>
+
+        </div>
+
+        <button
+          onclick="goToChapter(3)"
+          class="w-full py-3 btn-gradient text-white font-bold font-fredoka rounded-2xl shadow-lg transform hover:scale-[1.02] transition active:scale-95"
+        >
+          next chapter ➔
+        </button>
+
+      </section>
+
+      <!-- ========================= -->
+      <!-- CHAPTER 3 -->
+      <!-- ========================= -->
+
+      <section id="chapter-3" class="hidden space-y-4">
+
+        <div class="flex items-center space-x-2 text-purple-600">
+          <span class="text-sm font-bold font-fredoka">
+            🧩 chapter 03
+          </span>
+          <span class="text-[10px] text-purple-400">
+            — do you remember?
+          </span>
+        </div>
+
+        <h2 class="font-playfair text-2xl text-purple-900">
+          little pieces of us
+        </h2>
+
+        <p class="text-xs text-purple-600 font-medium">
+          tap each one to reveal the memory 💜
+        </p>
+
+        <div class="grid grid-cols-2 gap-3">
+
+          <div
+            onclick="unlockMemory(this, 'the friendship', 'We never really felt like strangers. Somewhere along the way, we became friends who just happened to love each other. 💜')"
+            class="bg-purple-200/60 p-4 rounded-xl text-center text-purple-700 font-bold font-fredoka text-sm envelope"
+          >
+            🫂
+            <br>
+            us as friends
+          </div>
+
+          <div
+            onclick="unlockMemory(this, 'your voice', 'You once called because you were overwhelmed. You told me my voice calms you. I don't think you realize how much that stayed with me.')"
+            class="bg-purple-200/60 p-4 rounded-xl text-center text-purple-700 font-bold font-fredoka text-sm envelope"
+          >
+            🎧
+            <br>
+            your voice
+          </div>
+
+          <div
+            onclick="unlockMemory(this, 'the space', 'One of the things I am learning about loving you is that sometimes loving you means giving you room to breathe instead of trying to fix everything.')"
+            class="bg-purple-200/60 p-4 rounded-xl text-center text-purple-700 font-bold font-fredoka text-sm envelope"
+          >
+            🌙
+            <br>
+            giving space
+          </div>
+
+          <div
+            onclick="unlockMemory(this, 'the reassurance', 'You told me you had no doubts about us and that you knew what you wanted. That meant more to me than you probably realized.')"
+            class="bg-purple-200/60 p-4 rounded-xl text-center text-purple-700 font-bold font-fredoka text-sm envelope"
+          >
+            💌
+            <br>
+            your reassurance
+          </div>
+
+        </div>
+
+        <div
+          id="memory-reveal"
+          class="min-h-[80px] text-sm font-medium text-purple-800 text-center bg-purple-50/70 p-3 rounded-xl border border-purple-100"
+        >
+          tap one above 💜
+        </div>
+
+        <button
+          onclick="goToChapter(4)"
+          class="w-full py-3 btn-gradient text-white font-bold font-fredoka rounded-2xl shadow-lg transform hover:scale-[1.02] transition active:scale-95"
+        >
+          next chapter ➔
+        </button>
+
+      </section>
+
+      <!-- ========================= -->
+      <!-- CHAPTER 4 -->
+      <!-- ========================= -->
+
+      <section id="chapter-4" class="hidden space-y-4">
+
+        <div class="flex items-center space-x-2 text-purple-600">
+          <span class="text-sm font-bold font-fredoka">
+            💌 chapter 04
+          </span>
+          <span class="text-[10px] text-purple-400">
+            — things I don't always say
+          </span>
+        </div>
+
+        <h2 class="font-playfair text-2xl text-purple-900">
+          open one
+        </h2>
+
+        <p class="text-xs text-purple-600 font-medium">
+          each one holds something I've been meaning to tell you
+        </p>
+
+        <div class="grid grid-cols-2 gap-3">
+
+          <div
+            onclick="openLetter(this, 'something I admire about you', 'Your heart. You care deeply, even when you don't always know how to say what you feel. And I think that quiet softness in you is one of the things I love most.')"
+            class="envelope bg-white/80 p-4 rounded-xl border border-purple-200 text-center text-purple-700 font-bold font-fredoka text-sm shadow-sm"
+          >
+            🌟
+            <br>
+            admire
+          </div>
+
+          <div
+            onclick="openLetter(this, 'something you changed in me', 'You made me softer. You made me more patient. You made me understand that sometimes being there for somebody isn't about having answers. Sometimes it is just about staying.')"
+            class="envelope bg-white/80 p-4 rounded-xl border border-purple-200 text-center text-purple-700 font-bold font-fredoka text-sm shadow-sm"
+          >
+            🌱
+            <br>
+            changed me
+          </div>
+
+          <div
+            onclick="openLetter(this, 'something that gets me every time', 'The little version of you that comes out when you're comfortable. The goofy you. The sleepy you. The one who just wants to be held and listen to my voice.')"
+            class="envelope bg-white/80 p-4 rounded-xl border border-purple-200 text-center text-purple-700 font-bold font-fredoka text-sm shadow-sm"
+          >
+            😂
+            <br>
+            you
+          </div>
+
+          <div
+            onclick="openLetter(this, 'something I hope we never lose', 'The friendship. The silliness. The random conversations. The comfort. The feeling that we can be completely ourselves around each other.')"
+            class="envelope bg-white/80 p-4 rounded-xl border border-purple-200 text-center text-purple-700 font-bold font-fredoka text-sm shadow-sm"
+          >
+            🌙
+            <br>
+            never lose
+          </div>
+
+        </div>
+
+        <div
+          id="letter-reveal"
+          class="bg-purple-50/80 p-4 rounded-xl border border-purple-100 min-h-[90px] text-sm text-purple-800"
+        >
+          choose one 💌
+        </div>
+
+        <button
+          onclick="goToChapter(5)"
+          class="w-full py-3 btn-gradient text-white font-bold font-fredoka rounded-2xl shadow-lg transform hover:scale-[1.02] transition active:scale-95"
+        >
+          next chapter ➔
+        </button>
+
+      </section>
+
+      <!-- ========================= -->
+      <!-- CHAPTER 5 -->
+      <!-- ========================= -->
+
+      <section id="chapter-5" class="hidden space-y-5 text-center">
+
+        <div class="text-4xl animate-float">
+          🌙
+        </div>
+
+        <h2 class="font-playfair text-2xl text-purple-900">
+          okay.
+        </h2>
+
+        <p class="text-purple-700 font-fredoka">
+          that's enough emotional damage for tonight.
+        </p>
+
+        <p class="text-purple-600 font-fredoka text-sm">
+          you made it through all of that.
+        </p>
+
+        <div class="w-20 h-0.5 bg-purple-300 mx-auto"></div>
+
+        <p class="text-2xl font-fredoka text-purple-800 animate-pulseSoft">
+          wait.
+        </p>
+
+        <div class="bg-purple-200/40 p-4 rounded-xl border border-purple-200/60">
+          <p class="text-sm font-fredoka text-purple-700">
+            actually…
+          </p>
+          <p class="text-xs text-purple-500 mt-1">
+            there's one more thing.
+          </p>
+        </div>
+
+        <button
+          onclick="goToChapter(6)"
+          class="mt-2 px-8 py-3 btn-gradient text-white font-bold font-fredoka rounded-2xl shadow-lg transform hover:scale-105 transition active:scale-95"
+        >
+          there's one more thing ➔
+        </button>
+
+      </section>
+
+      <!-- ========================= -->
+      <!-- CHAPTER 6 -->
+      <!-- ========================= -->
+
+      <section id="chapter-6" class="hidden space-y-5">
+
+        <div class="text-center">
+          <p class="text-sm text-purple-600 font-fredoka leading-relaxed">
+            “I've spent all this time making you relive
+            little pieces of us…”
+          </p>
+          <p class="text-lg font-playfair text-purple-900 mt-3">
+            “…so I figured I should probably give you another one.”
+          </p>
+        </div>
+
+        <div class="bg-white/60 p-5 rounded-2xl border border-purple-200 text-center transform hover:scale-[1.02] transition">
+          <p class="text-2xl font-fredoka text-purple-800">
+            tomorrow.
+          </p>
+          <p class="text-2xl font-fredoka text-purple-800">
+            you. me.
+          </p>
+          <p class="text-xl font-playfair text-purple-900 mt-2 animate-heartbeat">
+            are you coming?
+          </p>
+        </div>
+
+        <div
+          id="runaway-zone"
+          class="relative min-h-[140px] flex items-center justify-center pt-3"
+        >
+          <button
+            onclick="triggerReveal()"
+            class="px-10 py-4 btn-gradient text-white font-bold font-fredoka text-xl rounded-2xl shadow-lg transform hover:scale-105 active:scale-95 transition z-20"
+          >
+            YES 🥹
+          </button>
+
+          <button
+            id="no-btn"
+            class="runaway px-6 py-3 bg-white/80 text-purple-700 font-bold font-fredoka text-sm rounded-2xl border border-purple-200 shadow-sm"
+          >
+            obviously 🙄
+          </button>
+        </div>
+
+        <p class="text-[10px] text-purple-400 text-center font-fredoka">
+          (the no button runs away — you already know better 😉)
+        </p>
+
+      </section>
+
+      <!-- ========================= -->
+      <!-- FINAL REVEAL -->
+      <!-- ========================= -->
+
+      <section id="reveal-screen" class="hidden space-y-5 animate-fadeUp">
+
+        <div class="text-center">
+          <div class="inline-block bg-emerald-100 text-emerald-700 px-4 py-1.5 rounded-full text-[11px] font-bold font-fredoka animate-pulse">
+            🎉 it's a date! 🎉
+          </div>
+        </div>
+
+        <h2 class="font-playfair text-3xl text-purple-900 text-center glow-text">
+          our perfect day
+        </h2>
+
+        <p class="text-center text-sm text-purple-600">
+          and maybe the beginning of another little chapter.
+        </p>
+
+        <div class="bg-white/70 p-4 rounded-2xl border border-purple-100 space-y-4 shadow-inner">
+
+          <div class="flex items-center space-x-3">
+            <span class="w-9 h-9 rounded-full bg-purple-100 flex items-center justify-center text-lg shadow-sm">
+              🚗
+            </span>
+            <div>
+              <p class="text-[10px] text-purple-500 font-bold">
+                pick-up
+              </p>
+              <p class="text-sm font-bold text-purple-900 font-fredoka">
+                tomorrow · 3:30 PM
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-3">
+            <span class="w-9 h-9 rounded-full bg-purple-100 flex items-center justify-center text-lg shadow-sm">
+              🧺
+            </span>
+            <div>
+              <p class="text-[10px] text-purple-500 font-bold">
+                stop 1
+              </p>
+              <p class="text-sm font-bold text-purple-900 font-fredoka">
+                cozy picnic · snacks & games
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-3">
+            <span class="w-9 h-9 rounded-full bg-purple-100 flex items-center justify-center text-lg shadow-sm">
+              🔗
+            </span>
+            <div>
+              <p class="text-[10px] text-purple-500 font-bold">
+                stop 2
+              </p>
+              <p class="text-sm font-bold text-purple-900 font-fredoka">
+                matching permanent bracelets
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-3">
+            <span class="w-9 h-9 rounded-full bg-purple-100 flex items-center justify-center text-lg shadow-sm">
+              🌅
+            </span>
+            <div>
+              <p class="text-[10px] text-purple-500 font-bold">
+                stop 3
+              </p>
+              <p class="text-sm font-bold text-purple-900 font-fredoka">
+                golden hour drive · just us
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="bg-purple-50/80 p-4 rounded-2xl border border-purple-100">
+          <p class="text-sm text-purple-800 text-center leading-relaxed">
+            “I've wanted to do this with you for the longest time,
+            our bracelets,
+            a sunset drive,
+            and a whole day for us,
+            and let's not forget the most important part of the day but we'll keep that a secret for now <3
+            <br><br>
+            No pressure.
+            No pretending.
+            <br>
+            Just you and me,
+            being us.
+            <br><br>
+            See you tomorrow. ❤️”
+          </p>
+        </div>
+
+        <p class="text-xs text-purple-500 text-center font-medium">
+          screenshot this 📸
+        </p>
+
       </section>
 
     </div>
+
   </main>
 
-  <!-- Footer -->
-  <footer class="py-3 text-center text-xs text-purple-600 font-medium">
-    Made with 💜 just for you
+  <footer class="py-2 text-center text-[11px] text-purple-700 font-medium">
+    made with 💜 just for you
   </footer>
 
-  <!-- JAVASCRIPT LOGIC -->
+  <!-- ========================= -->
+  <!-- JAVASCRIPT -->
+  <!-- ========================= -->
+
   <script>
-    // --- Audio Control ---
-    const bgMusic = document.getElementById('bg-music');
-    const musicBtn = document.getElementById('music-btn');
+    // =========================
+    // MUSIC
+    // =========================
+
+    const audio = document.getElementById('bg-music');
     const musicIcon = document.getElementById('music-icon');
-    const musicText = document.getElementById('music-text');
-    let isPlaying = false;
+    const musicLabel = document.getElementById('music-label');
+    let audioPlaying = false;
 
-    function toggleAudio() {
-      if (isPlaying) {
-        bgMusic.pause();
+    function toggleMusic() {
+      if (audioPlaying) {
+        audio.pause();
         musicIcon.textContent = '🎵';
-        musicText.textContent = 'Play Song';
-        isPlaying = false;
+        musicLabel.textContent = 'play';
+        audioPlaying = false;
       } else {
-        bgMusic.play().then(() => {
-          musicIcon.textContent = '🎶';
-          musicText.textContent = 'Playing...';
-          isPlaying = true;
-        }).catch(e => console.log("Audio play deferred:", e));
+        audio.play()
+          .then(() => {
+            musicIcon.textContent = '🎶';
+            musicLabel.textContent = 'playing';
+            audioPlaying = true;
+          })
+          .catch(() => {
+            musicLabel.textContent = 'tap again';
+          });
       }
     }
 
-    // Attempt autoplay on first user interaction anywhere on screen
-    document.addEventListener('click', function initAudioOnFirstTouch() {
-      if (!isPlaying) {
-        bgMusic.play().then(() => {
-          musicIcon.textContent = '🎶';
-          musicText.textContent = 'Playing...';
-          isPlaying = true;
-        }).catch(() => {});
-      }
-      document.removeEventListener('click', initAudioOnFirstTouch);
-    }, { once: true });
+    // Start music after first interaction
+    document.addEventListener(
+      'click',
+      function startMusic() {
+        if (!audioPlaying) {
+          audio.play()
+            .then(() => {
+              musicIcon.textContent = '🎶';
+              musicLabel.textContent = 'playing';
+              audioPlaying = true;
+            })
+            .catch(() => {});
+        }
+        document.removeEventListener('click', startMusic);
+      },
+      { once: true }
+    );
 
+    // =========================
+    // CHAPTER NAVIGATION
+    // =========================
 
-    // --- Step Navigation ---
-    let currentStep = 1;
-    function goToStep(step) {
-      currentStep = step;
-      document.getElementById('puzzle-1').classList.add('hidden');
-      document.getElementById('puzzle-2').classList.add('hidden');
-      document.getElementById('puzzle-3').classList.add('hidden');
-      document.getElementById(`puzzle-${step}`).classList.remove('hidden');
+    const chapters = [
+      'chapter-0',
+      'chapter-1',
+      'chapter-2',
+      'chapter-3',
+      'chapter-4',
+      'chapter-5',
+      'chapter-6',
+      'reveal-screen'
+    ];
 
-      // Update progress bar
-      const bar = document.getElementById('progress-bar');
-      const text = document.getElementById('progress-text');
-      const percent = document.getElementById('progress-percent');
-      
-      if (step === 1) {
-        bar.style.width = '33%';
-        text.textContent = 'Level 1 of 3';
-        percent.textContent = '33%';
-      } else if (step === 2) {
-        bar.style.width = '66%';
-        text.textContent = 'Level 2 of 3';
-        percent.textContent = '66%';
-      } else if (step === 3) {
-        bar.style.width = '100%';
-        text.textContent = 'Final Level!';
-        percent.textContent = '99%';
-        initRunawayButton();
-      }
-    }
-
-
-    // --- PUZZLE 1: Scratch Canvas Logic ---
-    const canvas = document.getElementById('scratch-canvas');
-    const ctx = canvas.getContext('2d');
-    let isDrawing = false;
-    let scratchedPixels = 0;
-    let p1Unlocked = false;
-
-    function initScratchCard() {
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
-
-      // Fill canvas with lilac scratch layer
-      ctx.fillStyle = '#c084fc'; // lilac color
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Add overlay text pattern
-      ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 14px Fredoka, sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('✨ Scratch Me! ✨', canvas.width / 2, canvas.height / 2);
-    }
-
-    function getScratchPos(e) {
-      const rect = canvas.getBoundingClientRect();
-      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-      return {
-        x: clientX - rect.left,
-        y: clientY - rect.top
-      };
-    }
-
-    function scratch(e) {
-      if (!isDrawing || p1Unlocked) return;
-      e.preventDefault();
-      const pos = getScratchPos(e);
-      ctx.globalCompositeOperation = 'destination-out';
-      ctx.beginPath();
-      ctx.arc(pos.x, pos.y, 22, 0, Math.PI * 2);
-      ctx.fill();
-
-      scratchedPixels++;
-      // Unlock after scratching ~25 times
-      if (scratchedPixels > 25 && !p1Unlocked) {
-        p1Unlocked = true;
-        // Fade out canvas smoothly
-        canvas.style.transition = 'opacity 0.6s ease';
-        canvas.style.opacity = '0';
-        setTimeout(() => canvas.remove(), 600);
-
-        // Enable Next Button
-        const p1Btn = document.getElementById('p1-next-btn');
-        p1Btn.disabled = false;
-        p1Btn.className = "w-full py-3 bg-gradient-to-r from-lilac-500 to-lilac-700 hover:from-lilac-600 hover:to-lilac-800 text-white font-bold font-fredoka rounded-2xl shadow-lg transform hover:scale-102 transition-all cursor-pointer";
-        p1Btn.textContent = "Step 1 Cleared! Proceed ➔";
-      }
-    }
-
-    canvas.addEventListener('mousedown', (e) => { isDrawing = true; scratch(e); });
-    canvas.addEventListener('mousemove', scratch);
-    window.addEventListener('mouseup', () => isDrawing = false);
-
-    canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); });
-    canvas.addEventListener('touchmove', scratch);
-    window.addEventListener('touchend', () => isDrawing = false);
-
-    // Initialize scratch card after window load
-    window.addEventListener('load', initScratchCard);
-
-
-    // --- PUZZLE 2: Trivia Question Logic ---
-    function checkTrivia(btn, isCorrect) {
-      const options = document.querySelectorAll('.trivia-option');
-      const feedback = document.getElementById('trivia-feedback');
-      const p2Btn = document.getElementById('p2-next-btn');
-
-      options.forEach(opt => {
-        opt.classList.remove('bg-emerald-100', 'border-emerald-400', 'bg-rose-100', 'border-rose-300');
+    function goToChapter(number) {
+      chapters.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.classList.add('hidden');
+        }
       });
 
-      if (isCorrect) {
-        btn.classList.add('bg-emerald-100', 'border-emerald-400');
-        feedback.textContent = "Bingo! You know the secret sauce! 💖";
-        feedback.className = "h-6 text-xs font-bold text-emerald-600 font-fredoka";
-
-        p2Btn.disabled = false;
-        p2Btn.className = "w-full py-3 bg-gradient-to-r from-lilac-500 to-lilac-700 hover:from-lilac-600 hover:to-lilac-800 text-white font-bold font-fredoka rounded-2xl shadow-lg transform hover:scale-102 transition-all cursor-pointer";
-        p2Btn.textContent = "Correct! Move to Final Question ➔";
-      } else {
-        btn.classList.add('bg-rose-100', 'border-rose-300');
-        feedback.textContent = "Almost! But think bigger & cuter... 😜";
-        feedback.className = "h-6 text-xs font-bold text-rose-500 font-fredoka";
+      const selectedChapter = document.getElementById(chapters[number]);
+      if (selectedChapter) {
+        selectedChapter.classList.remove('hidden');
       }
+
+      // Update progress dots
+      document.querySelectorAll('.dot').forEach((dot, index) => {
+        dot.classList.toggle('active', index === number);
+      });
+
+      if (number === 6) {
+        initRunaway();
+      }
+
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     }
 
+    // =========================
+    // MEMORY UNLOCK
+    // =========================
 
-    // --- PUZZLE 3: Runaway "NO" Button Logic ---
+    function unlockMemory(element, question, answer) {
+      const reveal = document.getElementById('memory-reveal');
+
+      // Reset all memory cards
+      document.querySelectorAll('#chapter-3 .envelope').forEach(item => {
+        item.classList.remove('bg-emerald-100', 'border-emerald-300');
+        item.classList.add('bg-purple-200/60');
+      });
+
+      element.classList.remove('bg-purple-200/60');
+      element.classList.add('bg-emerald-100', 'border-emerald-300');
+
+      reveal.innerHTML = `
+        <span class="font-bold text-purple-900">
+          ${question}
+        </span>
+        <br>
+        <span class="text-purple-700">
+          ${answer}
+        </span>
+      `;
+    }
+
+    // =========================
+    // LETTERS
+    // =========================
+
+    function openLetter(element, title, content) {
+      const reveal = document.getElementById('letter-reveal');
+
+      document.querySelectorAll('#chapter-4 .envelope').forEach(item => {
+        item.classList.remove('bg-purple-100', 'border-purple-400');
+      });
+
+      element.classList.add('bg-purple-100', 'border-purple-400');
+
+      reveal.innerHTML = `
+        <span class="font-bold text-purple-900">
+          ${title}
+        </span>
+        <br><br>
+        <span class="text-purple-700">
+          ${content}
+        </span>
+      `;
+    }
+
+    // =========================
+    // RUNAWAY NO BUTTON
+    // =========================
+
     const noBtn = document.getElementById('no-btn');
-    const runawayContainer = document.getElementById('runaway-container');
+    const runawayZone = document.getElementById('runaway-zone');
     let escapeCount = 0;
 
     const phrases = [
-      "No 😜",
-      "Are you sure? 🥺",
-      "Nice try! 😋",
-      "Can't catch me! ✨",
-      "Still No? Impossible! 💜",
-      "Just click YES! 🥰"
+      "obviously 🙄",
+      "are you sure? 🥺",
+      "nice try 😋",
+      "can't catch me ✨",
+      "just click YES 💜",
+      "i'll keep running 😂"
     ];
 
-    function moveNoButton() {
-      const containerRect = runawayContainer.getBoundingClientRect();
-      const btnRect = noBtn.getBoundingClientRect();
+    function initRunaway() {
+      noBtn.style.display = 'block';
+      noBtn.style.transform = 'translate(0px, 0px)';
+      escapeCount = 0;
+      noBtn.textContent = 'obviously 🙄';
+    }
 
-      const maxX = containerRect.width - btnRect.width - 20;
-      const maxY = containerRect.height - btnRect.height - 10;
+    function moveNo() {
+      const container = runawayZone.getBoundingClientRect();
+      const button = noBtn.getBoundingClientRect();
 
-      const randomX = Math.floor(Math.random() * Math.max(maxX, 40)) - (containerRect.width / 2) + 60;
-      const randomY = Math.floor(Math.random() * Math.max(maxY, 20)) - (containerRect.height / 2) + 20;
+      const maxX = Math.max(container.width - button.width - 24, 40);
+      const maxY = Math.max(container.height - button.height - 20, 20);
 
-      noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
-      
+      const x = Math.random() * maxX - container.width / 2 + 30;
+      const y = Math.random() * maxY - container.height / 2 + 20;
+
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
       escapeCount++;
       noBtn.textContent = phrases[escapeCount % phrases.length];
     }
 
-    function initRunawayButton() {
-      noBtn.addEventListener('mouseover', moveNoButton);
-      noBtn.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        moveNoButton();
-      });
-    }
+    noBtn.addEventListener('mouseover', moveNo);
+    noBtn.addEventListener('touchstart', function(event) {
+      event.preventDefault();
+      moveNo();
+    });
 
+    // =========================
+    // FINAL REVEAL
+    // =========================
 
-    // --- THE BIG REVEAL (CONFETTI & FINAL DETAILS) ---
-    function triggerBigReveal() {
-      // Hide Progress bar
-      document.getElementById('progress-container').classList.add('hidden');
-      
-      // Hide Puzzle 3
-      document.getElementById('puzzle-3').classList.add('hidden');
+    function triggerReveal() {
+      document.getElementById('chapter-6').classList.add('hidden');
+      document.getElementById('reveal-screen').classList.remove('hidden');
+      noBtn.style.display = 'none';
 
-      // Show Reveal Screen
-      const reveal = document.getElementById('reveal-screen');
-      reveal.classList.remove('hidden');
-
-      // Trigger Fireworks Confetti Burst
-      const duration = 3.5 * 1000;
+      // Confetti
+      const duration = 4000;
       const end = Date.now() + duration;
 
       (function frame() {
         confetti({
-          particleCount: 6,
+          particleCount: 7,
           angle: 60,
-          spread: 55,
+          spread: 60,
           origin: { x: 0 },
           colors: ['#a855f7', '#d8b4fe', '#c084fc', '#f472b6', '#ffffff']
         });
+
         confetti({
-          particleCount: 6,
+          particleCount: 7,
           angle: 120,
-          spread: 55,
+          spread: 60,
           origin: { x: 1 },
           colors: ['#a855f7', '#d8b4fe', '#c084fc', '#f472b6', '#ffffff']
         });
@@ -520,6 +1060,13 @@
         }
       })();
     }
+
+    // =========================
+    // START
+    // =========================
+
+    goToChapter(0);
   </script>
+
 </body>
 </html>
